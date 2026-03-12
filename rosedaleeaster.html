@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face {
+    font-family: 'Comic Neue';
+    font-style: normal;
+    font-weight: 400;
+    src: url('src/assets/fonts/ComicNeue-Regular.woff2') format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Comic Neue';
+    font-style: normal;
+    font-weight: 700;
+    src: url('src/assets/fonts/ComicNeue-Bold.woff2') format('woff2');
+    font-display: swap;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 800px; height: 1000px; overflow: hidden; background: #fff; }
+
+  .flyer {
+    width: 800px;
+    height: 1000px;
+    background: linear-gradient(160deg, #fff0fb 0%, #e0f7fa 35%, #fffde7 65%, #f3e5f5 100%);
+    position: relative;
+    font-family: 'Comic Neue', 'Trebuchet MS', sans-serif;
+    overflow: hidden;
+  }
+
+  /* Polka dot pattern overlay */
+  .dots {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,182,193,0.4) 5px, transparent 5px),
+      radial-gradient(circle, rgba(144,238,144,0.35) 4px, transparent 4px),
+      radial-gradient(circle, rgba(173,216,230,0.35) 4px, transparent 4px);
+    background-size: 80px 80px, 60px 60px, 100px 100px;
+    background-position: 0 0, 40px 40px, 20px 60px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Rainbow border using box-shadow layering */
+  .rainbow-border {
+    position: absolute;
+    inset: 10px;
+    border-radius: 28px;
+    border: 8px solid transparent;
+    outline: none;
+    pointer-events: none;
+    z-index: 10;
+    /* Use a pseudo-element approach via box-shadow */
+    box-shadow:
+      0 0 0 8px #ff6b9d,
+      0 0 0 11px #ffd93d,
+      0 0 0 14px #6bcb77,
+      0 0 0 17px #4d96ff,
+      0 0 0 20px #c084fc;
+  }
+
+  /* Dashed inner border */
+  .dashed-border {
+    position: absolute;
+    inset: 34px;
+    border: 3px dashed rgba(255,255,255,0.75);
+    border-radius: 18px;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .content {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 42px 55px 30px;
+    height: 100%;
+  }
+
+  .title-top {
+    font-size: 22px;
+    font-weight: 900;
+    color: #ff6b9d;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 #fff, 2px 2px 0 rgba(255,107,157,0.25);
+    margin-bottom: 4px;
+  }
+
+  .title-main {
+    font-size: 80px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: 0;
+    color: #ff6b9d;
+    text-shadow:
+      3px 3px 0 #ffd93d,
+      6px 6px 0 rgba(255,107,157,0.2);
+    -webkit-text-stroke: 2px #fff;
+  }
+
+  .title-sub {
+    font-size: 44px;
+    font-weight: 900;
+    text-align: center;
+    color: #7c3aed;
+    text-shadow: 2px 2px 0 #fff, 3px 3px 0 rgba(124,58,237,0.2);
+    margin-bottom: 8px;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.5);
+  }
+
+  .character-row {
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 6px;
+    filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.15));
+  }
+
+  .star-divider {
+    font-size: 20px;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+  }
+
+  /* Activities section */
+  .activities-section {
+    background: rgba(255,255,255,0.65);
+    border: 3px solid #ff6b9d;
+    border-radius: 22px;
+    padding: 14px 24px;
+    width: 100%;
+    max-width: 680px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 16px rgba(255,107,157,0.15);
+  }
+
+  .activities-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #ff6b9d;
+    text-align: center;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .activities-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .activity-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(255,107,157,0.1), rgba(77,150,255,0.1));
+    border-radius: 14px;
+    padding: 7px 12px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e1b4b;
+    border: 1.5px solid rgba(255,107,157,0.3);
+  }
+
+  .activity-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  /* Details box */
+  .details-box {
+    background: rgba(255,255,255,0.65);
+    border: 3px solid #6bcb77;
+    border-radius: 22px;
+    padding: 16px 28px;
+    width: 100%;
+    max-width: 680px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 16px rgba(107,203,119,0.15);
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .detail-row:last-child { margin-bottom: 0; }
+
+  .detail-icon { font-size: 30px; flex-shrink: 0; }
+
+  .detail-label {
+    font-size: 23px;
+    font-weight: 900;
+    color: #1e1b4b;
+    line-height: 1.2;
+  }
+
+  .detail-value {
+    font-size: 19px;
+    font-weight: 700;
+    color: #4c1d95;
+    line-height: 1.3;
+  }
+
+  .fun-strip {
+    font-size: 34px;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+    filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.1));
+  }
+
+  .hosted-by {
+    font-size: 16px;
+    font-weight: 700;
+    color: #6b21a8;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .goodie-bag-banner {
+    background: linear-gradient(135deg, rgba(255,211,61,0.25), rgba(107,203,119,0.25));
+    border: 2.5px dashed #ffd93d;
+    border-radius: 16px;
+    padding: 9px 22px;
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #7c3aed;
+    width: 100%;
+    max-width: 680px;
+    box-shadow: 0 2px 8px rgba(255,211,61,0.25);
+  }
+
+  .rsvp-badge {
+    background: linear-gradient(135deg, #ff6b9d, #ffd93d);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 900;
+    padding: 8px 26px;
+    border-radius: 50px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 14px rgba(255,107,157,0.45);
+    letter-spacing: 0.5px;
+  }
+
+  /* Decorative egg shapes */
+  .deco-egg {
+    position: absolute;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 2;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  }
+</style>
+</head>
+<body>
+<div class="flyer">
+  <div class="dots"></div>
+  <div class="rainbow-border"></div>
+  <div class="dashed-border"></div>
+
+  <!-- Decorative eggs -->
+  <div class="deco-egg" style="width:58px;height:76px;background:linear-gradient(135deg,#ff6b9d,#ffd93d);top:50px;left:44px;transform:rotate(-18deg);opacity:0.9"></div>
+  <div class="deco-egg" style="width:50px;height:66px;background:linear-gradient(135deg,#6bcb77,#4d96ff);top:40px;right:50px;transform:rotate(14deg);opacity:0.9"></div>
+  <div class="deco-egg" style="width:54px;height:70px;background:linear-gradient(135deg,#ffd93d,#c084fc);bottom:54px;left:48px;transform:rotate(12deg);opacity:0.9"></div>
+  <div class="deco-egg" style="width:46px;height:60px;background:linear-gradient(135deg,#4d96ff,#6bcb77);bottom:50px;right:46px;transform:rotate(-10deg);opacity:0.9"></div>
+  <div class="deco-egg" style="width:34px;height:46px;background:linear-gradient(135deg,#c4b5fd,#fca5a5);top:46%;left:38px;transform:rotate(22deg);opacity:0.8"></div>
+  <div class="deco-egg" style="width:34px;height:46px;background:linear-gradient(135deg,#fde68a,#86efac);top:44%;right:38px;transform:rotate(-20deg);opacity:0.8"></div>
+
+  <div class="content">
+    <div class="title-top">🌸 Rosedale Presents 🌸</div>
+            <div class="title-main">EASTER</div>
+            <div class="title-sub">EGG HUNT</div>
+
+    <div class="character-row">🐰🌷🐣🌸🥚🌼🐇</div>
+    <div class="star-divider">⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐</div>
+
+    <div class="activities-section">
+      <div class="activities-title">🎊 Fun for the Whole Family! 🎊</div>
+      <div class="activities-grid">
+        <div class="activity-item"><span class="activity-icon">🥚</span> Easter Egg Hunt</div>
+        <div class="activity-item"><span class="activity-icon">🎨</span> Crafts</div>
+        <div class="activity-item"><span class="activity-icon">🐰</span> Meet the Easter Bunny</div>
+        <div class="activity-item"><span class="activity-icon">🎁</span> Prizes &amp; Goodies</div>
+        <div class="activity-item"><span class="activity-icon">🎶</span> Music &amp; Dancing</div>
+        <div class="activity-item"><span class="activity-icon">🍭</span> Sweet Treats</div>
+      </div>
+    </div>
+
+    <div class="details-box">
+      <div class="detail-row">
+        <div class="detail-icon">📅</div>
+        <div>
+          <div class="detail-label">Sunday, April 5, 2026</div>
+          <div class="detail-value">11:00 AM – 2:00 PM</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">📍</div>
+        <div>
+          <div class="detail-label">Rosedale Community Resort</div>
+          <div class="detail-value">740 Sierra Madre Ave., Azusa, CA 91702</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fun-strip">🌈🐣🌷🥚🌸🐰🌼🐣🌈</div>
+    <div class="goodie-bag-banner">🎀 Special surprise goodie bags for the first 100 kids! 🎀</div>
+    <div class="hosted-by">Hosted by the Rosedale Social Committee</div>
+    <div style="height:8px"></div>
+    <div class="rsvp-badge">✨ RSVP Required · Space is Limited ✨</div>
+  </div>
+</div>
+</body>
+</html>
