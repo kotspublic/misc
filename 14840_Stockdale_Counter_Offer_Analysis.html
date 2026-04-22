@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Counter Offer Analysis — 14840 Stockdale St, Baldwin Park, CA 91706</title>
+  <style>
+    :root {
+      --primary: #1a3a5c;
+      --accent: #2e7d32;
+      --warning: #e65100;
+      --danger: #b71c1c;
+      --low: #2e7d32;
+      --moderate: #f57f17;
+      --high: #b71c1c;
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --border: #dde3ea;
+      --text: #1c2b3a;
+      --muted: #5a6a7a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 2rem 2.5rem 1.5rem;
+    }
+    header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.3rem; }
+    header .subtitle { font-size: 1rem; opacity: 0.85; }
+    header .meta { margin-top: 1rem; font-size: 0.85rem; opacity: 0.75; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+    section { margin-bottom: 2.5rem; }
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      border-left: 4px solid var(--primary);
+      padding-left: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    h3 { font-size: 1rem; font-weight: 600; color: var(--primary); margin: 1.2rem 0 0.5rem; }
+    p { margin-bottom: 0.75rem; font-size: 0.95rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    th {
+      background: var(--primary);
+      color: #fff;
+      text-align: left;
+      padding: 0.6rem 0.9rem;
+      font-weight: 600;
+    }
+    td {
+      padding: 0.55rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f0f4f8; }
+    tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-low { background: #e8f5e9; color: var(--low); }
+    .badge-moderate { background: #fff8e1; color: var(--moderate); }
+    .badge-high { background: #ffebee; color: var(--danger); }
+    .badge-active { background: #e3f2fd; color: #1565c0; }
+    .badge-accepted { background: #e8f5e9; color: var(--low); }
+    .badge-changed { background: #fff3e0; color: var(--warning); }
+    .badge-critical { background: #ffebee; color: var(--danger); }
+    .alert {
+      border-radius: 6px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1rem;
+      font-size: 0.92rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .alert-warning { background: #fff8e1; border-left: 4px solid #f9a825; }
+    .alert-danger { background: #ffebee; border-left: 4px solid var(--danger); }
+    .alert-success { background: #e8f5e9; border-left: 4px solid var(--low); }
+    .alert-info { background: #e3f2fd; border-left: 4px solid #1565c0; }
+    .alert-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      text-align: center;
+    }
+    .stat-card .stat-value { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+    .stat-card .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+    .stat-card .stat-sub { font-size: 0.78rem; color: var(--muted); }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .check-done { color: var(--low); }
+    .check-pending { color: var(--moderate); }
+    .check-critical { color: var(--danger); }
+    .bottom-line {
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2rem;
+    }
+    .bottom-line h2 { color: #fff; border-left-color: #90caf9; }
+    .bottom-line p { color: rgba(255,255,255,0.9); }
+    .bottom-line ul { color: rgba(255,255,255,0.9); padding-left: 1.25rem; font-size: 0.93rem; }
+    .bottom-line ul li { margin-bottom: 0.4rem; }
+    footer {
+      background: #e8edf2;
+      border-top: 1px solid var(--border);
+      padding: 1rem 2rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .negative { color: var(--danger); font-weight: 600; }
+    .positive { color: var(--low); font-weight: 600; }
+    @media (max-width: 700px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      header { padding: 1.25rem 1rem; }
+      .container { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Counter Offer Analysis</h1>
+  <div class="subtitle">14840 Stockdale St, Baldwin Park, CA 91706</div>
+  <div class="meta">
+    <span>📅 Prepared: April 22, 2026</span>
+    <span>👤 Buyer: Christine Lee</span>
+    <span>🏢 Buyer's Broker: CSB Realty / Crisanto Sonny Bautista (DRE #00994093)</span>
+    <span>🏢 Seller's Broker: Corral Investments &amp; Realty / Minerva Corral (DRE #01041781)</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Price Comparison Cards -->
+  <section>
+    <div class="grid-3">
+      <div class="stat-card">
+        <div class="stat-value">$715,000</div>
+        <div class="stat-label">Your Original Offer</div>
+        <div class="stat-sub">April 19, 2026</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--warning)">$722,000</div>
+        <div class="stat-label">Seller's Counter Offer</div>
+        <div class="stat-sub">April 21, 2026 · +$7,000</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--accent)">$720,000</div>
+        <div class="stat-label">Your Proposed Counter</div>
+        <div class="stat-sub">-$2,000 from seller · +$5,000 from original</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Facts -->
+  <section>
+    <h2>Key Facts Informing This Analysis</h2>
+    <div class="grid-2">
+      <div class="alert alert-success">
+        <span class="alert-icon">✅</span>
+        <div><strong>Loan is fully underwritten.</strong> The $465,000 loan at 6.5% has full underwriting approval. This significantly reduces loan contingency risk and makes the 20-day escrow feasible.</div>
+      </div>
+      <div class="alert alert-info">
+        <span class="alert-icon">🔌</span>
+        <div><strong>Electrical panel is a push-button breaker</strong> — not knob-and-tube wiring. This is a less severe category, making insurance more obtainable and reducing replacement urgency.</div>
+      </div>
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <div><strong>Property sold as-is.</strong> No repairs or credits from seller. All repair costs fall entirely on the buyer. Estimated repairs: $30,500–$95,000.</div>
+      </div>
+      <div class="alert alert-danger">
+        <span class="alert-icon">🏠</span>
+        <div><strong>Known defects:</strong> No central AC, push-button breaker panel, detached garage needs repair, cosmetic repairs needed, and potential unknown issues.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Original Offer Summary -->
+  <section>
+    <h2>1. Original Offer Summary (C.A.R. Form RPA, April 19, 2026)</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Term</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Offer Price</td><td><strong>$715,000</strong></td></tr>
+          <tr><td>Initial Deposit</td><td>$22,000 (3.08%)</td></tr>
+          <tr><td>Loan Amount</td><td>$465,000 (65.03%) at 6.5%</td></tr>
+          <tr><td>Down Payment Balance</td><td>$228,000</td></tr>
+          <tr><td>Close of Escrow</td><td>30 days after Acceptance</td></tr>
+          <tr><td>Occupancy Type</td><td>Investment</td></tr>
+          <tr><td>Buyer's Broker Compensation</td><td>2.25% of final purchase price</td></tr>
+          <tr><td>Termite Report</td><td>Seller pays; Section 1 clearance included</td></tr>
+          <tr><td>Home Warranty</td><td>Seller pays up to $750</td></tr>
+          <tr><td>Escrow Fee</td><td>Each party pays their own</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Contingency Periods (All Active at 17 Days)</h3>
+    <div class="card">
+      <table>
+        <thead><tr><th>Contingency</th><th>Timeframe</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>L(1) Loan</td><td>17 days after Acceptance</td><td><span class="badge badge-active">Active</span></td></tr>
+          <tr><td>L(2) Appraisal</td><td>17 days after Acceptance</td><td><span class="badge badge-active">Active</span></td></tr>
+          <tr><td>L(3) Investigation of Property</td><td>17 days after Acceptance</td><td><span class="badge badge-active">Active</span></td></tr>
+          <tr><td>L(4) Insurance</td><td>17 days after Acceptance</td><td><span class="badge badge-active">Active</span></td></tr>
+          <tr><td>L(5) Review of Seller Documents</td><td>17 days (or 5 days after delivery, whichever is later)</td><td><span class="badge badge-active">Active</span></td></tr>
+          <tr><td>L(6) Preliminary Title Report</td><td>17 days (or 5 days after delivery, whichever is later)</td><td><span class="badge badge-active">Active</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.85rem;color:var(--muted)">All six primary contingencies (L1–L6) are fully active in the original offer. Neither the loan nor the appraisal contingency was waived.</p>
+    </div>
+  </section>
+
+  <!-- Seller Counter Offer -->
+  <section>
+    <h2>2. Seller Counter Offer Summary (C.A.R. Form SCO No. 1, April 21, 2026)</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>#</th><th>Item</th><th>Seller's Counter Requirement</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Purchase Price</td><td><strong>$722,000</strong> (up $7,000 from $715,000)</td></tr>
+          <tr><td>2</td><td>Close of Escrow</td><td><strong>20 days or less</strong> (shortened from 30 days)</td></tr>
+          <tr><td>3</td><td>Contingencies L(1)–L(4)</td><td><strong>Removed within 10 days</strong> after Acceptance (shortened from 17 days)</td></tr>
+          <tr><td>4</td><td>Contingencies L(5)–L(6)</td><td><strong>Removed within 5 days</strong> after Acceptance (shortened from 17 days)</td></tr>
+          <tr><td>5</td><td>Escrow</td><td>Westlake Escrow — Marysol Rice, Escrow Officer</td></tr>
+          <tr><td>6</td><td>Title</td><td>Provident Title — Liz Navarrete / Steve Poss</td></tr>
+          <tr><td>7</td><td>As-Is/Where-Is</td><td>Seller will make <strong>no repairs</strong> and provide <strong>no credit for repairs</strong></td></tr>
+          <tr><td>8</td><td>Termite</td><td>Seller provides report only; <strong>Buyer pays for clearance</strong> if required</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Proposed Buyer Counter -->
+  <section>
+    <h2>3. Proposed Buyer Counter Offer at $720,000</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Term</th><th>Seller's Counter</th><th>Buyer's Proposed Counter</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Purchase Price</td><td>$722,000</td><td><strong>$720,000</strong></td><td><span class="badge badge-changed">Changed</span></td></tr>
+          <tr><td>Close of Escrow</td><td>20 days or less</td><td>20 days</td><td><span class="badge badge-accepted">Accepted</span></td></tr>
+          <tr><td>Contingencies L(1)–L(4)</td><td>10 days</td><td>10 days</td><td><span class="badge badge-accepted">Accepted</span></td></tr>
+          <tr><td>Contingencies L(5)–L(6)</td><td>5 days</td><td><strong>10 days</strong></td><td><span class="badge badge-changed">Changed</span></td></tr>
+          <tr><td>As-Is/Where-Is</td><td>Yes, no repairs/credits</td><td>Accepted</td><td><span class="badge badge-accepted">Accepted</span></td></tr>
+          <tr><td>Termite Clearance</td><td>Buyer pays</td><td>Accepted</td><td><span class="badge badge-accepted">Accepted</span></td></tr>
+          <tr><td>Escrow (Westlake)</td><td>Westlake Escrow</td><td>Accepted</td><td><span class="badge badge-accepted">Accepted</span></td></tr>
+          <tr><td>Title (Provident)</td><td>Provident Title</td><td>Accepted</td><td><span class="badge badge-accepted">Accepted</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Contingency Analysis -->
+  <section>
+    <h2>4. Contingency Analysis</h2>
+
+    <div class="card">
+      <h3>L(1) Loan Contingency — 10 Days &nbsp;<span class="badge badge-low">Risk: Low</span></h3>
+      <p>With a fully underwritten loan approval already in hand, removing the loan contingency within 10 days is straightforward. The written loan commitment can be delivered to the seller within 1–3 days of acceptance.</p>
+      <div class="alert alert-success"><span class="alert-icon">✅</span><div><strong>Action:</strong> Have your lender prepare the written loan commitment letter immediately upon acceptance. Deliver to seller's agent within 3 days.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>L(2) Appraisal Contingency — 10 Days &nbsp;<span class="badge badge-moderate">Risk: Moderate</span></h3>
+      <p>Even with a fully underwritten loan, the appraisal must be ordered, completed, and the report received within 10 days. Typical LA County timeline: appraiser scheduling 2–4 days + report delivery 3–5 days = 5–9 days total. Tight but feasible if ordered immediately.</p>
+      <p><strong>Critical risk:</strong> If the property appraises below $720,000 (possible given as-is condition), you must receive the report and exercise your cancellation right within 10 days.</p>
+      <div class="alert alert-warning"><span class="alert-icon">⚠️</span><div><strong>Action:</strong> Order the appraisal on Day 1 of acceptance. Coordinate with your lender to expedite.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>L(3) Investigation of Property — 10 Days &nbsp;<span class="badge badge-moderate">Risk: Moderate</span></h3>
+      <p>Ten days for property investigation is tight but manageable with advance preparation. Required inspections:</p>
+      <ul style="padding-left:1.25rem;font-size:0.92rem;margin-bottom:0.75rem;">
+        <li>General home inspection (schedule Day 1–2)</li>
+        <li>Electrician inspection — identify specific panel brand and assess safety (schedule Day 1–2)</li>
+        <li>Garage structural assessment (schedule Day 1–3)</li>
+        <li>Review of all reports (Days 7–10)</li>
+      </ul>
+      <p><strong>Key focus areas:</strong> Identify the specific push-button panel brand (Federal Pacific Stab-Lok, Zinsco, Pushmatic, or other) — this determines urgency of replacement. Also assess roof, plumbing, foundation, and HVAC.</p>
+      <div class="alert alert-warning"><span class="alert-icon">⚠️</span><div><strong>Action:</strong> Have inspectors identified and ready to schedule before acceptance. Contact them on Day 1.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>L(4) Insurance Contingency — 10 Days &nbsp;<span class="badge badge-low">Risk: Low–Moderate</span></h3>
+      <p>With the electrical panel clarified as a push-button breaker (not knob-and-tube), obtaining insurance is considerably more straightforward. Most standard carriers will insure a property with a push-button panel, though some may require an electrical inspection or add a modest surcharge.</p>
+      <p>For an investment/Airbnb property, a <strong>landlord policy or short-term rental policy</strong> is required. Available from carriers like Proper Insurance, Slice, CBIZ, or through specialty brokers.</p>
+      <div class="alert alert-info"><span class="alert-icon">ℹ️</span><div><strong>Action:</strong> Contact 2–3 insurance brokers on Day 1. Specify investment/Airbnb property with push-button breaker panel. Request quotes within 5 days.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>L(5) Seller Documents — Proposed 10 Days (Seller Wants 5) &nbsp;<span class="badge badge-changed">Negotiate</span></h3>
+      <p>The seller must deliver all disclosure documents (TDS, SPQ, NHD, Lead Disclosure, etc.) within 7 days of acceptance. If documents are delivered on Day 7, you would have only 3 days to review them under the seller's 5-day deadline. Under the proposed 10-day deadline, you have adequate time to review documents after delivery.</p>
+      <div class="alert alert-danger"><span class="alert-icon">🔴</span><div><strong>Hold firm on 10 days.</strong> This is a reasonable and fair ask that protects your ability to review documents properly.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>L(6) Preliminary Title Report — Proposed 10 Days (Seller Wants 5) &nbsp;<span class="badge badge-changed">Negotiate</span></h3>
+      <p>The preliminary title report may not be available until Day 5–7 of escrow. A 5-day deadline could expire before you even receive it. Ten days provides adequate time to review for liens, encumbrances, easements, or title defects.</p>
+      <div class="alert alert-danger"><span class="alert-icon">🔴</span><div><strong>Hold firm on 10 days.</strong> The original offer's delivery-based protection is eliminated by the seller's 5-day hard deadline.</div></div>
+    </div>
+  </section>
+
+  <!-- Financial Analysis -->
+  <section>
+    <h2>5. Financial Analysis</h2>
+
+    <h3>Repair Cost Estimate</h3>
+    <div class="card">
+      <table>
+        <thead><tr><th>Item</th><th>Estimated Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Push-button breaker panel upgrade</td><td>$2,500–$5,000</td></tr>
+          <tr><td>Central AC installation (mini-split or central)</td><td>$8,000–$15,000</td></tr>
+          <tr><td>Detached garage repairs</td><td>$5,000–$30,000</td></tr>
+          <tr><td>Cosmetic repairs (paint, flooring, fixtures)</td><td>$10,000–$30,000</td></tr>
+          <tr><td>Unknown issues (contingency)</td><td>$5,000–$15,000</td></tr>
+          <tr><td><strong>Total Estimated Repairs</strong></td><td><strong>$30,500–$95,000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>All-In Cost Summary</h3>
+    <div class="grid-3">
+      <div class="stat-card">
+        <div class="stat-value">$720,000</div>
+        <div class="stat-label">Purchase Price</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--warning)">$30,500–$95,000</div>
+        <div class="stat-label">Estimated Repairs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--danger)">$764,900–$836,600</div>
+        <div class="stat-label">Total All-In Cost</div>
+        <div class="stat-sub">Including closing costs (~2–3%)</div>
+      </div>
+    </div>
+
+    <h3>Airbnb Investment Analysis</h3>
+    <div class="alert alert-danger">
+      <span class="alert-icon">🚨</span>
+      <div><strong>Critical — Verify STR Regulations First:</strong> Call the City of Baldwin Park Planning Department at <strong>(626) 813-5261</strong> or check the municipal code to confirm whether non-owner-occupied short-term rentals are permitted at this address. If STRs are prohibited, the investment thesis is invalidated.</div>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>Metric</th><th>Conservative</th><th>Optimistic</th></tr></thead>
+        <tbody>
+          <tr><td>Nightly Rate</td><td>$110</td><td>$175</td></tr>
+          <tr><td>Occupancy Rate</td><td>50%</td><td>65%</td></tr>
+          <tr><td>Annual Gross Revenue</td><td>$20,075</td><td>$41,506</td></tr>
+          <tr><td>Platform Fees (15%)</td><td>($3,011)</td><td>($6,226)</td></tr>
+          <tr><td>Net Revenue</td><td>$17,064</td><td>$35,280</td></tr>
+          <tr><td>Property Taxes (~1.25%)</td><td>($9,000)</td><td>($9,000)</td></tr>
+          <tr><td>Insurance</td><td>($3,000)</td><td>($3,000)</td></tr>
+          <tr><td>Utilities</td><td>($3,600)</td><td>($3,600)</td></tr>
+          <tr><td>Maintenance/Repairs</td><td>($5,000)</td><td>($3,000)</td></tr>
+          <tr><td>Management</td><td>($2,000)</td><td>($2,000)</td></tr>
+          <tr><td><strong>Net Operating Income</strong></td><td class="negative">($5,536)</td><td class="positive">$14,680</td></tr>
+          <tr><td>Annual Mortgage ($465K @ 6.5%, 30yr)</td><td>($35,400)</td><td>($35,400)</td></tr>
+          <tr><td><strong>Net Cash Flow After Mortgage</strong></td><td class="negative">($40,936)</td><td class="negative">($20,720)</td></tr>
+          <tr><td><strong>Cap Rate</strong></td><td class="negative">-0.77%</td><td class="positive">2.04%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.85rem;color:var(--muted)">Cash flow will likely be negative at $720,000 with a $465,000 loan. Ensure you have the financial capacity to carry the property through the renovation period and any slow Airbnb months.</p>
+    </div>
+  </section>
+
+  <!-- Risk Assessment -->
+  <section>
+    <h2>6. Revised Risk Assessment</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Factor</th><th>Before New Info</th><th>After New Info</th></tr></thead>
+        <tbody>
+          <tr><td>Loan contingency risk</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-low">Low</span> — fully underwritten</td></tr>
+          <tr><td>20-day escrow feasibility</td><td><span class="badge badge-high">Difficult</span></td><td><span class="badge badge-low">Feasible</span> — loan already approved</td></tr>
+          <tr><td>Insurance availability</td><td><span class="badge badge-high">High Risk</span></td><td><span class="badge badge-low">Low–Moderate</span> — push-button panel is insurable</td></tr>
+          <tr><td>Electrical panel replacement urgency</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-moderate">Moderate</span> — depends on specific brand</td></tr>
+          <tr><td>Appraisal risk</td><td><span class="badge badge-moderate">Moderate</span></td><td><span class="badge badge-moderate">Moderate</span> — order Day 1</td></tr>
+          <tr><td>Investigation scope in 10 days</td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-moderate">Moderate</span> — prepare inspectors in advance</td></tr>
+          <tr><td><strong>Overall transaction risk</strong></td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-moderate">Moderate</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-success">
+      <span class="alert-icon">✅</span>
+      <div><strong>Likelihood of Seller Accepting $720,000 / 10-Day Contingencies: High.</strong> With a fully underwritten loan, you are a very strong buyer. The $2,000 reduction from $722,000 is minimal, and your acceptance of the 10-day contingency framework (with only the L5/L6 extension from 5 to 10 days) gives the seller most of what they want.</div>
+    </div>
+  </section>
+
+  <!-- Pre-Acceptance Checklist -->
+  <section>
+    <h2>7. Pre-Acceptance Action Checklist</h2>
+    <div class="card">
+      <ul class="checklist">
+        <li><span class="check-icon check-done">✅</span><div><strong>Confirm loan is fully underwritten</strong> — Complete</div></li>
+        <li><span class="check-icon check-critical">🚨</span><div><strong>Verify Baldwin Park STR regulations</strong> — Call City of Baldwin Park Planning at (626) 813-5261 or check municipal code online. <em>Most critical unknown for investment thesis.</em></div></li>
+        <li><span class="check-icon check-pending">🔲</span><div><strong>Identify general home inspector</strong> — Ready to schedule on Day 1 of acceptance</div></li>
+        <li><span class="check-icon check-pending">🔲</span><div><strong>Identify licensed electrician</strong> — Ready to schedule on Day 1; ask about specific push-button panel brand identification</div></li>
+        <li><span class="check-icon check-pending">🔲</span><div><strong>Identify structural inspector for garage</strong> — Ready to schedule on Day 1</div></li>
+        <li><span class="check-icon check-pending">🔲</span><div><strong>Identify 2–3 insurance brokers</strong> — Specializing in STR/investment properties; ready to contact on Day 1</div></li>
+        <li><span class="check-icon check-pending">🔲</span><div><strong>Coordinate appraisal order with lender</strong> — Order on Day 1 of acceptance</div></li>
+        <li><span class="check-icon check-pending">🔲</span><div><strong>Ask seller's agent about specific panel brand</strong> — Federal Pacific Stab-Lok and Zinsco panels have documented safety issues; identify before acceptance if possible</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Recommended Terms -->
+  <section>
+    <h2>8. Recommended Counter Offer Terms</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Term</th><th>Recommendation</th></tr></thead>
+        <tbody>
+          <tr><td>Price</td><td><strong>$720,000</strong></td></tr>
+          <tr><td>Escrow Period</td><td>Accept 20 days (feasible with fully underwritten loan)</td></tr>
+          <tr><td>L(1) Loan</td><td>Accept 10 days — remove within 1–3 days</td></tr>
+          <tr><td>L(2) Appraisal</td><td>Accept 10 days — order appraisal Day 1</td></tr>
+          <tr><td>L(3) Investigation</td><td>Accept 10 days — schedule inspectors before acceptance</td></tr>
+          <tr><td>L(4) Insurance</td><td>Accept 10 days — start shopping Day 1</td></tr>
+          <tr><td>L(5) Seller Documents</td><td><strong>Counter to 10 days</strong> (not 5)</td></tr>
+          <tr><td>L(6) Title Report</td><td><strong>Counter to 10 days</strong> (not 5)</td></tr>
+          <tr><td>As-Is</td><td>Accept</td></tr>
+          <tr><td>Termite Clearance</td><td>Accept</td></tr>
+          <tr><td>Escrow/Title Companies</td><td>Accept</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Bottom Line -->
+  <div class="bottom-line">
+    <h2>Bottom Line</h2>
+    <p>With a fully underwritten loan and a push-button breaker panel (not knob-and-tube), the transaction risk profile has improved significantly. <strong>Countering at $720,000 with 10-day contingencies for L(1)–L(4) and 10-day contingencies for L(5)–L(6) is a strong, well-positioned counter offer that is likely to be accepted.</strong></p>
+    <p style="margin-top:0.75rem">The 20-day escrow is now feasible given your loan status. The primary remaining risks are:</p>
+    <ul style="margin-top:0.5rem">
+      <li><strong>Appraisal coming in below $720,000</strong> — order immediately on Day 1</li>
+      <li><strong>Unknown defects discovered during inspection</strong> — maximize inspection scope within 10 days; identify the specific push-button panel brand</li>
+      <li><strong>STR permissibility in Baldwin Park</strong> — verify before accepting any counter offer (most critical unknown)</li>
+      <li><strong>Investment economics</strong> — cash flow will likely be negative at $720,000 with a $465,000 loan; ensure you have the financial capacity to carry the property through renovation and slow Airbnb months</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  This analysis is based solely on the documents provided and general market knowledge. It does not constitute legal or financial advice. Consult a licensed California real estate attorney, a certified public accountant, and a qualified home inspector before making any decisions.
+</footer>
+
+</body>
+</html>
